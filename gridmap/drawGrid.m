@@ -1,4 +1,4 @@
-function test1
+function drawGrid 
 
 clear all;
 close all;
