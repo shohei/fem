@@ -17,7 +17,8 @@ computeLocalStiffnessMatrix();
 computeTotalStiffnessMatrix();
 loadBoundaryCondition();
 loadForce();
-u=K\F;
+% u=K\F;
+u = gaussian_elimination(K,F);
 fprintf('[computed displacement]\n');
 u
 draw_displaced_truss();

@@ -1,17 +1,16 @@
-function gauss2
+function ans = gaussian_elimination(A,b)
 % A = [2 6 28;
 %     3 4 27;
 %     4 14 60];
 % 
 % b = [34 66 68]';
 
-A = [1 -2 3
-3 1 -5
--2 6 -9]
-b = [1 -4 -2]'
+% A = [1 -2 3
+% 3 1 -5
+% -2 6 -9]
+% b = [1 -4 -2]'
 
 ans = solveLinearEquation(A,b);
-ans
 
     function x = solveLinearEquation(A,b)
         [A,b] = forward_elimination(A,b);        
