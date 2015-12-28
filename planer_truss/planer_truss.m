@@ -9,7 +9,6 @@ eks = {};
 K = zeros(np*2);
 F = zeros(np*2,1);
 u = zeros(np*2,1);
-% draw_truss();
 computeLocalStiffnessMatrix();
 computeTotalStiffnessMatrix();
 loadBoundaryCondition();
@@ -17,6 +16,8 @@ loadForce();
 u = K\F;
 fprintf('[computed displacement]\n');
 u
+draw_truss();
+draw_displaced_truss();
 
     function computeLocalStiffnessMatrix()
         for idx=1:ne
@@ -92,8 +93,9 @@ u
         end
     end
 
-    function draw_truss
-        for i=1:size(elems)[1]
+    function draw_truss()
+        count = size(elems,1);
+        for i=1:count
             n1=elems(i,2);
             n2=elems(i,3);
             n1x=nodes(n1,2);
@@ -101,6 +103,20 @@ u
             n2x=nodes(n2,2);
             n2y=nodes(n2,3);
             plot([n1x,n2x],[n1y,n2y],'b-');
+            hold on;
+        end
+    end
+
+    function draw_displaced_truss()
+        count = size(elems,1);
+        for i=1:count
+            n1=elems(i,2);
+            n2=elems(i,3);
+            n1x=nodes(n1,2)+u(2*n1-1);
+            n1y=nodes(n1,3)+u(2*n1);
+            n2x=nodes(n2,2)+u(2*n2-1);
+            n2y=nodes(n2,3)+u(2*n2);
+            plot([n1x,n2x],[n1y,n2y],'r--');
             hold on;
         end
     end
