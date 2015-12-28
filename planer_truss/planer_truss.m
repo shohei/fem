@@ -5,6 +5,8 @@ global np;global ne;global nb;global nf;
 global nodes;global elems;
 global cnsts;global loads;
 load exp1;
+draw_truss();
+
 eks = {};
 K = zeros(np*2);
 F = zeros(np*2,1);
@@ -16,7 +18,6 @@ loadForce();
 u = K\F;
 fprintf('[computed displacement]\n');
 u
-draw_truss();
 draw_displaced_truss();
 
     function computeLocalStiffnessMatrix()
@@ -90,6 +91,11 @@ draw_displaced_truss();
             fidx = loads(idx,1);
             F(2*fidx-1) = loads(idx,2);
             F(2*fidx) = loads(idx,3);
+            fx_origin = nodes(fidx,2);
+            fy_origin = nodes(fidx,3);
+            fx_dist = fx_origin+loads(idx,2);
+            fy_dist = fy_origin+loads(idx,3);
+            drawArrow([fx_origin,fx_dist],[fy_origin,fy_dist]);
         end
     end
 
@@ -120,5 +126,10 @@ draw_displaced_truss();
             hold on;
         end
     end
+
+    function drawArrow(x,y)
+        quiver( x(1),y(1),x(2)-x(1),y(2)-y(1),0 );
+    end
+
 
 end
