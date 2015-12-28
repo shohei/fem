@@ -4,8 +4,10 @@ close all;
 global np;global ne;global nb;global nf;
 global nodes;global elems;
 global cnsts;global loads;
-load exp1;
+% load exp1;
+load exp2;
 draw_truss();
+axis equal;
 
 eks = {};
 K = zeros(np*2);
@@ -15,7 +17,7 @@ computeLocalStiffnessMatrix();
 computeTotalStiffnessMatrix();
 loadBoundaryCondition();
 loadForce();
-u = K\F;
+u=K\F;
 fprintf('[computed displacement]\n');
 u
 draw_displaced_truss();
@@ -52,10 +54,9 @@ draw_displaced_truss();
             it = double(cell2mat(eks(idx,1)));
             jt = double(cell2mat(eks(idx,2)));
             ek = cell2mat(eks(idx,3));
-            
             ll = [2*it-1,2*it,2*jt-1,2*jt];
             for ie=1:4
-                for je=1:4
+                for je=1:4                    
                     K(ll(ie),ll(je)) = K(ll(ie),ll(je)) + ek(ie,je);
                 end
             end
