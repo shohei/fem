@@ -1,9 +1,9 @@
 function solid_truss
 close all; clear all;
-init_params();
+init_params2();
 format shortG;
 global nodes; global elems; global bounds; global loads;
-load model_data;
+load model_data2;
 np = size(nodes,1);
 ne = size(elems,1);
 nb = size(bounds,1);
@@ -21,7 +21,7 @@ zmax=max(nodes(:,3));
 zmin=min(nodes(:,3));
 axis([xmin-1 xmax+1 ymin-1 ymax+1 zmin-1 zmax+1]);
 view([14 -10 6]);
-drawWall(ymin,ymax,zmin,zmax);
+% drawWall(ymin,ymax,zmin,zmax);
 computeTotalStiffness();
 global F;
 F=zeros(np*3,1);
@@ -39,7 +39,7 @@ drawDisplacedTruss();
             h=plot3([nodes(start,1),nodes(stop,1)],...
                 [nodes(start,2),nodes(stop,2)],...
                 [nodes(start,3),nodes(stop,3)],'b-');
-            set(h,'LineWidth',4);
+%             set(h,'LineWidth',4);
         end
     end
 
@@ -144,7 +144,7 @@ drawDisplacedTruss();
             h=plot3([startX,stopX],...
                 [startY,stopY],...
                 [startZ,stopZ],'r--');
-            set(h,'LineWidth',4);
+%             set(h,'LineWidth',4);
         end
     end
 
