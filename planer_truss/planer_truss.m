@@ -1,6 +1,7 @@
 function planer_truss
 clear all;
 close all;
+init_params2();
 global np;global ne;global nb;global nf;
 global nodes;global elems;
 global cnsts;global loads;
