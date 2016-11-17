@@ -5,62 +5,67 @@ close all;
 CAsize = 100;
 
 [X,Y] = meshgrid(1,CAsize+1);
-figure();
-hold on;
 
-plot(X,Y,'k');
-plot(Y,X,'k');
+k = {'111','110','101','100','011','010','001','000'};
+%  v = {'1','0','1','0','0','1','0','1'}; %165
 
-I = zeros(CAsize+1);
-surface(I);
-colormap(gray);
-axis off;
+%  writerObj = VideoWriter('newfile.avi');
+%  open(writerObj);
 
-origin = zeros(1,CAsize);
-% for idx=1:CAsize
-%     origin(end+1) = (rand>0.5);
-% end
-origin(CAsize/2) = 1;
-origin
 
-I(CAsize,:) = horzcat(origin,0);
-surface(I);
-
-k = {'000','001','010','011','100','101','110','111'};
-v = {'0','1','1','0','1','1','0','1'};
-
-lookup_table = containers.Map(k,v);
-
-extended_origin = horzcat(origin(CAsize),origin,origin(1));
-
-writerObj = VideoWriter('newfile.avi');
-open(writerObj);
-
-for time=2:CAsize
-    
-    next = [];
-    for idx=1:CAsize
-        key = '';
-        %convert to string
-        key(1) = int2str(extended_origin(idx));
-        key(2) = int2str(extended_origin(idx+1));
-        key(3) = int2str(extended_origin(idx+2));        
-        next(end+1) = str2num(lookup_table(key));
-    end
-    next
-    I(CAsize-time+1,:) = horzcat(next,0);
+v = {};
+ for rule=1:256
+%   rule = 165;
+    figure(1);
+    gcf();
+    clf();
+    hold on;
+    plot(X,Y,'k');
+    plot(Y,X,'k');
+    I = zeros(CAsize+1);
     surface(I);
+    colormap(gray);
+    axis off;
+    
+    origin = zeros(1,CAsize);
+    origin(CAsize/2) = 1;
+    
+    I(CAsize,:) = horzcat(origin,0);
+    surface(I);
+
+    sequence =  dec2bin(rule,8);
+    for jdx=1:8
+       v(rule,jdx) = cellstr(sequence(jdx));       
+    end
+    lookup_table = containers.Map(k,v(rule,:));
+    extended_origin = horzcat(origin(CAsize),origin,origin(1));
+
+    for time=2:CAsize
+        next = [];
+        for idx=1:CAsize
+            key = '';
+            key(1) = int2str(extended_origin(idx));
+            key(2) = int2str(extended_origin(idx+1));
+            key(3) = int2str(extended_origin(idx+2));
+            next(end+1) = str2num(lookup_table(key));
+        end
+        I(CAsize-time+1,:) = horzcat(next,0);
+        extended_origin = horzcat(next(CAsize),next,next(1));
+    end  
+    
+    surface(I);
+    ruleStr = sprintf('Rule: %d',rule);
+    ylim=get(gca,'YLim');
+    xlim=get(gca,'XLim');
+    text(xlim(2)*0.05,ylim(2)*0.85,ruleStr,'VerticalAlignment','bottom','HorizontalAlignment','left');      
     drawnow();
     
-     frame = getframe(gcf);
-     writeVideo(writerObj, frame);
-   
-    pause(0.1);
+%   frame = getframe(gcf);
+%   writeVideo(writerObj, frame);
+  pause(1);  
+ end
 
-    extended_origin = horzcat(next(CAsize),next,next(1));
-    
-end
-
- close(writerObj);
-
+%  close(writerObj);
+ 
+ 
 end
