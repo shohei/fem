@@ -9,13 +9,11 @@ CAsize = 100;
 k = {'111','110','101','100','011','010','001','000'};
 %  v = {'1','0','1','0','0','1','0','1'}; %165
 
-%  writerObj = VideoWriter('newfile.avi');
-%  open(writerObj);
-
+%   writerObj = VideoWriter('newfile.avi');
+%   open(writerObj);
 
 v = {};
  for rule=1:256
-%   rule = 165;
     figure(1);
     gcf();
     clf();
@@ -58,14 +56,16 @@ v = {};
     ylim=get(gca,'YLim');
     xlim=get(gca,'XLim');
     text(xlim(2)*0.05,ylim(2)*0.85,ruleStr,'VerticalAlignment','bottom','HorizontalAlignment','left');      
-    drawnow();
-    
-%   frame = getframe(gcf);
-%   writeVideo(writerObj, frame);
-  pause(1);  
+   drawnow();
+   
+%    frame = getframe(gcf);   
+%    for second=1:50 % default 30 fps
+%        writeVideo(writerObj, frame);
+%    end
+   
  end
 
-%  close(writerObj);
+%   close(writerObj);
  
  
 end
