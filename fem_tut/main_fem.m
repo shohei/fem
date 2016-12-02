@@ -1,4 +1,4 @@
-function main_fem
+function main_fem()
 
 [nodes,elements,components,nodes_tria3,dof_node,dof_total,...
     dof_tria3,thickness,young,poisson,x,y,connectivity,Um,U,F] = init_fem();
