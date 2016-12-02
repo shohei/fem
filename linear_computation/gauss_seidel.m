@@ -1,4 +1,4 @@
-function jacobi
+function gauss_seidel
 
 % dim = 10;
 
@@ -17,11 +17,11 @@ b = [-22 27 89 -73 22]';
 
 criteria = 1e-8;
 %  x = zeros(dim,1);
- x = [0 0 0 0 0]';
+x = [0 0 0 0 0]';
 xprev = x;
 for idx=1:1000000
-    invD = diag(1./diag(D));
-    x = - invD*(L+U)*x + invD*b;
+    invDL = diag(1./diag(D));
+    x = - invD*L*x - invD*U*xprev + invD*b;
     errs = abs(x-xprev);
     err = min(errs);
     if isnan(err)
